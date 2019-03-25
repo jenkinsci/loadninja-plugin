@@ -3,3 +3,9 @@
 # output and work. 
 target
 work
+.classpath
+.factorypath
+.project
+.settings
+.DS_Store
+.idea
