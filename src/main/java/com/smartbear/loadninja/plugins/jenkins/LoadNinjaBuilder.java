@@ -12,6 +12,8 @@ import hudson.tasks.BuildStepDescriptor;
 import hudson.RelativePath;
 import hudson.EnvVars;
 
+import jenkins.model.*;
+
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 
@@ -28,6 +30,7 @@ import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.verb.*;
 
 import com.smartbear.loadninja.api.SimpleAPI;
 import com.smartbear.loadninja.helper.TestSummary;
@@ -230,8 +233,6 @@ public class LoadNinjaBuilder extends Builder implements SimpleBuildStep {
 
       }
     }
-
-    @Symbol("greet")
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
         public FormValidation doCheckErrorPassCriteria(@QueryParameter("errorPassCriteria") String errorPassCriteria)
@@ -258,7 +259,9 @@ public class LoadNinjaBuilder extends Builder implements SimpleBuildStep {
             return FormValidation.ok();
         }
 
+        @POST
         public FormValidation doValidateAPIKey(@QueryParameter("apiKey") final String apiKey) throws IOException, ServletException {
+            Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
             try {
                 boolean isValid = SimpleAPI.validateAPIKey(apiKey);
                 return isValid ? FormValidation.ok("API Key is valid") : FormValidation.error("API Key is not valid");
