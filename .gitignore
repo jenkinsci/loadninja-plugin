@@ -8,4 +8,5 @@ work
 .project
 .settings
 .DS_Store
+.vscode
 .idea

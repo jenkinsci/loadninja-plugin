@@ -91,6 +91,7 @@
         <name>Christopher Talavera</name>
         <email>christopher.talavera@smartbear.com</email>
       </developer>
+    </developers>
 
     <!-- Assuming you want to host on @jenkinsci:
     <url>https://wiki.jenkins.io/display/JENKINS/TODO+Plugin</url>
