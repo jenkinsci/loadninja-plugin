@@ -1,0 +1,26 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout" xmlns:st="jelly:stapler">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
+  <l:layout title="LoadNinja">
+      <l:side-panel>
+          <st:include page="sidepanel.jelly" it="${it.run}" optional="true" />
+      </l:side-panel>
+      <l:main-panel>
+          <h1>Scenario: ${it.scenarioId}</h1>
+          <h1>TestId: ${it.testId}</h1>
+          <j:if test="${it.status == 'Load Test Passed'}">
+            <h3><i class="fas fa-2x fa-check" style="color: green;"></i> ${it.status}</h3>
+          </j:if>
+          <j:if test="${it.status == 'Load Test Failed'}">
+            <h3><i class="fas fa-2x fa-times" style="color: red;"></i> ${it.status}</h3>
+          </j:if>
+          <j:if test="${it.status == 'Still Running Test'}">
+            <h3><i class="fas fa-2x fa-minus" style="color: gray;"></i> ${it.status}</h3>
+          </j:if>
+          <j:if test="${it.status != 'Still Running Test' &amp;&amp; it.hasNoData != true}">
+            <p><strong>Link to <a href="https://app.loadninja.com/test-results/${it.testId}" target="_blank">test results</a> on LoadNinja</strong></p>
+          </j:if>
+
+      </l:main-panel>
+  </l:layout>
+</j:jelly>

@@ -1,0 +1,20 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    <f:entry title="${%apiKey}" field="apiKey">
+        <f:textbox />
+    </f:entry>
+    <f:validateButton title="Validate API Key" progress="${%Validating...}" method="validateAPIKey" with="apiKey" />
+    <f:entry title="${%scenarioId}" field="scenarioId">
+        <f:textbox />
+    </f:entry>
+    <f:optionalBlock name="oeb" checked="${instance.errorPassCriteria != null}" title="Enable pass criteria for performance test errors">
+      <f:entry title="Error % is less than: " field="errorPassCriteria">
+        <f:textbox />
+      </f:entry>
+    </f:optionalBlock>
+    <f:optionalBlock name="odb" checked="${instance.durationPassCriteria != null}" title="Enable pass criteria for performance test step duration">
+      <f:entry title="Average step duration(s) is less than: " field="durationPassCriteria">
+        <f:textbox/>
+      </f:entry>
+    </f:optionalBlock>
+</j:jelly>
