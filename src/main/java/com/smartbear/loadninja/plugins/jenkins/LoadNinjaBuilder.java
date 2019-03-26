@@ -9,25 +9,17 @@ import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.tasks.Builder;
 import hudson.tasks.BuildStepDescriptor;
-import hudson.RelativePath;
-import hudson.EnvVars;
 
 import jenkins.model.*;
-
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.Date;
 import java.text.*;
 import java.sql.Timestamp;
-import java.time.Instant;
 
 import jenkins.tasks.SimpleBuildStep;
 
-import org.jenkinsci.Symbol;
-import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.verb.*;
@@ -169,7 +161,8 @@ public class LoadNinjaBuilder extends Builder implements SimpleBuildStep {
             }
         }
 
-        Instant instant = startTimestamp.toInstant();
+        String instant = startTimestamp.toString().replace(" ", "T");
+        instant += "Z";
 
         String jUnit = "";
         jUnit += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
