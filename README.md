@@ -6,13 +6,6 @@ Use this plugin to integrate LoadNinja tests in your Jenkins builds.
 
 LoadNinja is a cloud-based load testing and performance testing platform for web applications. It helps developers, QA teams, and performance engineers check if their web servers sustain a massive load and if the servers are robust and scalable.
 
-## Prepare to run LoadNinja tests
-
-To start using LoadNinja in your Jenkins builds:
-
-* Install this plugin.
-* Allow your Jenkins instance to access your LoadNinja account. To do that, go to **System > Global Credentials**, and specify the credentials of your LoadNinja account there.
-
 ## Configure your build
 
 1. In Jenkins, select a job for LoadNinja tests and click **Configure**.
@@ -25,7 +18,6 @@ To start using LoadNinja in your Jenkins builds:
   Currently, this plugin supports the following report types:
   * JUnit-style XML reports
   * [Zephyr](https://getzephyr.com) reports in Jira
-
 
 ## Usage notes
 
