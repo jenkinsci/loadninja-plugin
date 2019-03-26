@@ -54,7 +54,6 @@ public class SimpleAPI {
       .body(scenario)
       .asJson();
       if( jsonResponse.getStatus() == 200) {
-        String message = jsonResponse.getBody().getObject().getString("message");
         String testId = jsonResponse.getBody().getObject().getJSONObject("data").getString("testId");
         return testId;
       } else {
@@ -81,7 +80,6 @@ public class SimpleAPI {
       .headers(getHeaders(apiKey))
       .asJson();
       if( jsonResponse.getStatus() == 200) {
-        String message = jsonResponse.getBody().getObject().getString("message");
         String status = jsonResponse.getBody().getObject().getJSONObject("data").getString("status");
         return status;
       } else {
