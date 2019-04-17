@@ -21,8 +21,9 @@
           ~ stapler-plugin.version: The Stapler Maven plugin version required by the plugin.
      -->
     </properties>
-    <name>LoadNinja</name>
+    <name>LoadNinja Plugin</name>
     <description>Allows users to run a LoadNinja load test</description>
+    <url>https://wiki.jenkins.io/display/JENKINS/LoadNinja+Plugin</url>    
     <!-- The default licence for Jenkins OSS Plugins is MIT. Substitute for the applicable one if needed. -->
     <licenses>
         <license>
@@ -92,15 +93,13 @@
         <email>christopher.talavera@smartbear.com</email>
       </developer>
     </developers>
-
-    <!-- Assuming you want to host on @jenkinsci:
-    <url>https://wiki.jenkins.io/display/JENKINS/TODO+Plugin</url>
+    
     <scm>
         <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
     </scm>
-    -->
+
     <repositories>
         <repository>
             <id>repo.jenkins-ci.org</id>
