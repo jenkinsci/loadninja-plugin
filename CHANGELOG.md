@@ -10,7 +10,7 @@ All notable changes to the LoadNinja Jenkins Plugin will be documented in this f
 - Version 1.4 remains available for legacy Jenkins installations
 
 ### Changed
-- Upgraded parent plugin from 3.4 to 4.88
+- Upgraded parent plugin from 3.4 to 4.42
 - Upgraded Jenkins baseline from 2.7.3 to 2.414.3
 - Modernized build infrastructure and dependencies
 - Removed deprecated Java 7 target (now uses Java 11)
