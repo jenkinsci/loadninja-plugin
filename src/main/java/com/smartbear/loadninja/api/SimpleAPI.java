@@ -5,13 +5,15 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import hudson.util.Secret;
+
 import com.smartbear.loadninja.helper.TestSummary;
 
 import java.util.Map;
 import java.util.HashMap;
 
 public class SimpleAPI {
-  public static boolean validateAPIKey(String apiKey){
+  public static boolean validateAPIKey(Secret apiKey){
     try {
       HttpResponse<JsonNode> jsonResponse = Unirest
       .get("https://ldsj2iwi73.execute-api.us-east-1.amazonaws.com/prd/authcheck")
@@ -27,7 +29,7 @@ public class SimpleAPI {
     }
   }
 
-  public static String getScenarioFromId(String apiKey, String scenarioId ){
+  public static String getScenarioFromId(Secret apiKey, String scenarioId ){
     try {
       HttpResponse<JsonNode> jsonResponse = Unirest
       .get("https://ldsj2iwi73.execute-api.us-east-1.amazonaws.com/prd/scenario/" + scenarioId)
@@ -45,7 +47,7 @@ public class SimpleAPI {
   }
 
 
-  public static String runTest(String apiKey, String scenario ){
+  public static String runTest(Secret apiKey, String scenario ){
     try {
       HttpResponse<JsonNode> jsonResponse = Unirest
       .post("https://ldsj2iwi73.execute-api.us-east-1.amazonaws.com/prd/test-run")
@@ -63,16 +65,16 @@ public class SimpleAPI {
     }
   }
 
-  private static Map<String, String> getHeaders(String apiKey) {
+  private static Map<String, String> getHeaders(Secret apiKey) {
     Map<String, String> headers = new HashMap<String, String>();
     headers.put("accept", "application/json");
     headers.put("Content-Type", "application/json");
-    headers.put("Authorization", apiKey);
+    headers.put("Authorization", apiKey.getPlainText());
 
     return headers;
   }
 
-  public static String getTestStatus(String apiKey, String testId){
+  public static String getTestStatus(Secret apiKey, String testId){
     try {
       HttpResponse<JsonNode> jsonResponse = Unirest
       .get("https://ldsj2iwi73.execute-api.us-east-1.amazonaws.com/prd/test-run/" + testId + "/status")
@@ -89,7 +91,7 @@ public class SimpleAPI {
     }
   }
 
-  public static String getTestSummary(String apiKey, String testId){
+  public static String getTestSummary(Secret apiKey, String testId){
     try {
       HttpResponse<JsonNode> jsonResponse = Unirest
       .get("https://ldsj2iwi73.execute-api.us-east-1.amazonaws.com/prd/test-run/" + testId + "/summary?lastRow=true")
@@ -109,7 +111,7 @@ public class SimpleAPI {
     }
   }
 
-  public static TestSummary getFinalTestSummary(String apiKey, String testId){
+  public static TestSummary getFinalTestSummary(Secret apiKey, String testId){
     try {
       HttpResponse<JsonNode> jsonResponse = Unirest
       .get("https://ldsj2iwi73.execute-api.us-east-1.amazonaws.com/prd/test-run/" + testId + "/summary?lastRow=true")

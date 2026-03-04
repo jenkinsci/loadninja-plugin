@@ -9,6 +9,7 @@ import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.tasks.Builder;
 import hudson.tasks.BuildStepDescriptor;
+import hudson.util.Secret;
 
 import jenkins.model.*;
 
@@ -29,13 +30,13 @@ import com.smartbear.loadninja.helper.TestSummary;
 
 public class LoadNinjaBuilder extends Builder implements SimpleBuildStep {
 
-    private final String apiKey;
+    private final Secret apiKey;
     private final String scenarioId;
     private String errorPassCriteria;
     private String durationPassCriteria;
 
     @DataBoundConstructor
-    public LoadNinjaBuilder(String apiKey, String scenarioId, OptionalErrorBlock oeb, OptionalDurationBlock odb) {
+    public LoadNinjaBuilder(Secret apiKey, String scenarioId, OptionalErrorBlock oeb, OptionalDurationBlock odb) {
         this.apiKey = apiKey;
         this.scenarioId = scenarioId;
         this.errorPassCriteria = (oeb != null) ? oeb.errorPassCriteria : null;
@@ -60,7 +61,7 @@ public class LoadNinjaBuilder extends Builder implements SimpleBuildStep {
         }
     }
 
-    public String getApiKey() {
+    public Secret getApiKey() {
         return apiKey;
     }
 
@@ -88,7 +89,9 @@ public class LoadNinjaBuilder extends Builder implements SimpleBuildStep {
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        listener.getLogger().println("[" + df.format(new Date()) + "] Firing load test, from scenario: " + scenarioId + ", using APIKEY: "+apiKey+"!");
+        String maskedApiKey = maskApiKey(apiKey.getPlainText());
+
+        listener.getLogger().println("[" + df.format(new Date()) + "] Firing load test, from scenario: " + scenarioId + ", using APIKEY: "+maskedApiKey+"!");
 
         // Get the Scenario
 
@@ -226,6 +229,17 @@ public class LoadNinjaBuilder extends Builder implements SimpleBuildStep {
 
       }
     }
+    
+    private static String maskApiKey(String apiKey) {
+        StringBuilder masked = new StringBuilder();
+        int maskLength = apiKey.length() - 3;
+        for (int i = 0; i < maskLength; i++) {
+            masked.append("*");
+        }
+        String lastThree = apiKey.substring(apiKey.length() - 3);
+        return masked.toString() + lastThree;
+    }
+
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
         public FormValidation doCheckErrorPassCriteria(@QueryParameter("errorPassCriteria") String errorPassCriteria)
@@ -253,7 +267,7 @@ public class LoadNinjaBuilder extends Builder implements SimpleBuildStep {
         }
 
         @POST
-        public FormValidation doValidateAPIKey(@QueryParameter("apiKey") final String apiKey) throws IOException, ServletException {
+        public FormValidation doValidateAPIKey(@QueryParameter("apiKey") final Secret apiKey) throws IOException, ServletException {
             Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
             try {
                 boolean isValid = SimpleAPI.validateAPIKey(apiKey);
